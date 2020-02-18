@@ -117,10 +117,10 @@ If everything is OK, you can find the bin file after compiling.
 
 Next, we should merge the bin file with fwpkg firmware.
 
-1)	Create a new directory named “fwpkg” under root directory, put the standard firmware into “fwpkg”.
+(1)	Create a new directory named “fwpkg” under root directory, put the standard firmware into “fwpkg”.
 
-2)	Open the cmd under root directory and execute following command (use BC28 as example):
+(2)	Open the cmd under root directory and execute following command (use BC28 as example):
 
 "C:\Program Files (x86)\Neul\UpdatePackage\UpdatePackage.exe" updateApplication --in .\fwpkg\BC28.fwpkg –folder .\build_scons\BC28 --out BC28_OCN
 
-3)	After that, download the generated fwpkg firmware into module.
+(3)	After that, download the generated fwpkg firmware into module.
