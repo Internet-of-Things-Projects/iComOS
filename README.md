@@ -77,9 +77,28 @@ You can find UEUpdaterUI-3.22.0.14.msi in the Tools package to install UEUpdater
 UEMonitor is used to obtain the log information from the modules (e.g., BC28).
 You can find UEMonitor-3.22.0.14.msi in the Tools package to install UEMonitor.
 
-3.	Compile and Merge
+3.	Application Development
 
-3.1 Define library file
+3.1 How to start
+-	You can directly create a new .c file in /src/user/private as a new application.
+-	We provide some examples in /src/example/private. You can copy one example to /src/usr/private and then modify it as you like.
+-	You can find an example.c in FirstExample package, which is a test example using GPIO to control the LED twinkling every 500ms.
+
+3.2 Modify script
+
+When you try to use your own application (copy an example or create by yourself), please disable the example application by annotating “_QUECTEL_OPEN_EXAMPLE_” in \src\SConscript.
+
+if "_QUECTEL_OPEN_CPU_" in env['CPPDEFINES']: 
+
+env.Append( CPPDEFINES=["_QUECTEL_IOT_OPEN_"]) #Enable iot function 
+
+#env.Append( CPPDEFINES=["_QUECTEL_ONET_OPEN_"]) #Disable onenet function
+
+#env.Append( CPPDEFINES=["_QUECTEL_OPEN_EXAMPLE_"]) #Disable example
+
+4.	Compile and Merge
+
+4.1 Define library file
 
 SDK has provided 2 different library files which related to Huawei OceanConnect Platform and OneNET Platform respectively. You can modify the script file to decide which Platform you are going to use. 
 
@@ -91,7 +110,7 @@ env.Append( CPPDEFINES=["_QUECTEL_IOT_OPEN_"]) #Enable iot function
 
 #env.Append( CPPDEFINES=["_QUECTEL_ONET_OPEN_"]) #Disable onenet function
 
-3.2 Define module
+4.2 Define module
 
 Please indicate the module. You can define it in the scons.bat under root directory. For example,
 -	opencpu_bc35g relates to BC35-G and BC95 R2.0
@@ -103,7 +122,7 @@ C:\Python27\Scripts\scons.bat -c target=opencpu_bc28
 
 C:\Python27\Scripts\scons.bat target=opencpu_bc28
 
-3.3 Compile
+4.3 Compile
 
 Open the cmd under root directory and execute following commands:
 -	scons.bat -c
@@ -113,14 +132,14 @@ If everything is OK, you can find the bin file after compiling.
 -	BC28：\build_scons\BC28 
 -	BC35-G/BC95 R2.0： \build_scons\BC35G 
 
-3.4 Merge fwpkg Firmware
+4.4 Merge fwpkg Firmware
 
 Next, we should merge the bin file with fwpkg firmware.
 
-(1)	Create a new directory named “fwpkg” under root directory, put the standard firmware into “fwpkg”.
+(1)	Create a new directory named “fwpkg” under root directory, put the standard firmware into “fwpkg” (use BC28 as example, find BC28JAR01A10.fwpkg in FirstExample package).
 
-(2)	Open the cmd under root directory and execute following command (use BC28 as example):
+(2)	Open the cmd under root directory and execute following command:
 
-"C:\Program Files (x86)\Neul\UpdatePackage\UpdatePackage.exe" updateApplication --in .\fwpkg\BC28.fwpkg –folder .\build_scons\BC28 --out BC28_OCN
+"C:\Program Files (x86)\Neul\UpdatePackage\UpdatePackage.exe" updateApplication --in .\fwpkg\BC28JAR01A10.fwpkg –folder .\build_scons\BC28 --out BC28JAR01A10_OCN
 
 (3)	After that, download the generated fwpkg firmware into module.
